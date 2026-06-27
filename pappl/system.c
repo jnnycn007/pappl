@@ -735,6 +735,13 @@ papplSystemRun(pappl_system_t *system)	// I - System
       // Limit CPU usage
       if (ptimeout > 0)
 	usleep(1);
+
+      // Resume listening
+      if (system->num_clients < system->max_clients)
+      {
+	for (i = 0; i < system->num_listeners; i ++)
+	  system->listeners[i].events = POLLIN;
+      }
     }
     else if (pcount > 0)
     {
@@ -771,14 +778,6 @@ papplSystemRun(pappl_system_t *system)	// I - System
       {
 	for (i = 0; i < system->num_listeners; i ++)
 	  system->listeners[i].events = 0;
-      }
-    }
-    else
-    {
-      if (system->num_clients < system->max_clients)
-      {
-	for (i = 0; i < system->num_listeners; i ++)
-	  system->listeners[i].events = POLLIN;
       }
     }
 
