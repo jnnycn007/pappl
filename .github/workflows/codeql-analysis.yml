@@ -36,13 +36,13 @@ jobs:
 
     steps:
       - name: Checkout PAPPL sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Update build environment
         run: sudo apt-get update --fix-missing -y
       - name: Install prerequisites
         run: sudo apt-get install -y avahi-daemon cppcheck libavahi-client-dev libgnutls28-dev libjpeg-dev libpam-dev libpng-dev libusb-1.0-0-dev zlib1g-dev
       - name: Checkout libcups3
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: OpenPrinting/libcups
           path: libcups
