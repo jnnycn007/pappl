@@ -5,7 +5,7 @@
 //
 //   ./parse-lock-log FILENAME.log
 //
-// Copyright © 2022-2024 by Michael R Sweet
+// Copyright © 2022-2026 by Michael R Sweet
 //
 // Licensed under Apache License v2.0.  See the file "LICENSE" for more
 // information.
@@ -99,7 +99,18 @@ main(int  argc,				// I - Number of command-line arguments
     // Parse log line of the following format:
     //
     //   THREAD/FUNCTION: ACTION OBJ(OBJNAME)
-    thread = strtoull(line, &ptr, 16);
+    if (strncmp(line, "0x", 2))
+    {
+      if ((ptr = strstr(line, " 0x")) == NULL)
+        continue;
+
+      thread = strtoull(ptr, &ptr, 16);
+    }
+    else
+    {
+      thread = strtoull(line, &ptr, 16);
+    }
+
     if (!ptr || *ptr != '/' || !ptr[1])
       continue;
 
